@@ -85,12 +85,7 @@ body{
 }
 .navbar.scrolled{background:rgba(5,12,24,.85)}
 .nav-brand{display:flex;align-items:center;gap:12px}
-.nav-logo{
-  width:32px;height:32px;border-radius:8px;
-  background:var(--primary);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-mono);font-size:18px;font-weight:bold;color:#fff;
-}
+.nav-logo-img{height:34px;width:auto}
 .nav-title{display:flex;flex-direction:column}
 .nav-name{font-family:var(--font-mono);font-size:11px;font-weight:bold;letter-spacing:.5px;color:var(--text-primary)}
 .nav-studio{font-family:var(--font-mono);font-size:9px;color:var(--text-secondary)}

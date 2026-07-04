@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AEL AI Chat Interface — Ayman Elmasry</title>
+  <link rel="stylesheet" href="ael_ai_chat.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230074FF'/><text x='16' y='23' fill='%23fff' font-size='20' font-weight='bold' text-anchor='middle' font-family='monospace'>A</text></svg>">
+</head>
+<body>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="noise"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar glass" id="navbar">
+    <div class="nav-brand">
+      <span class="nav-logo">A</span>
+      <div class="nav-title">
+        <span class="nav-name">AYMAN ELMASRY</span>
+        <span class="nav-studio">AEL Digital Studio</span>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview" class="nav-link active">Overview</a>
+      <a href="#chat" class="nav-link">Chat</a>
+      <a href="#models" class="nav-link">Models</a>
+      <a href="#settings" class="nav-link">Settings</a>
+      <a href="#history" class="nav-link">History</a>
+      <a href="#about" class="nav-link">About</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Section 1: Overview -->
+  <section id="overview" class="section active">
+    <div class="section-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container hero">
+      <div class="hero-badge glass">
+        <span class="badge-dot"></span>
+        v1.0 — AEL Studio
+      </div>
+      <h1 class="hero-title">
+        <span class="text-gradient">AEL AI Chat</span>
+        <span class="hero-sub">Interface</span>
+      </h1>
+      <p class="hero-desc">
+        A unified chat interface for multiple AI models. Connect to <strong>OpenAI</strong>, <strong>Anthropic Claude</strong>, or run in <strong>Demo Mode</strong> — all with a single, consistent UI. Save conversations, customize system prompts, and export your chats.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card glass">
+          <span class="stat-icon">🤖</span>
+          <span class="stat-value" id="statModels">6</span>
+          <span class="stat-label">Models Supported</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-icon">💬</span>
+          <span class="stat-value" id="statConversations">0</span>
+          <span class="stat-label">Conversations</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-icon">⚡</span>
+          <span class="stat-value" id="statMessages">0</span>
+          <span class="stat-label">Total Messages</span>
+        </div>
+        <div class="stat-card glass">
+          <span class="stat-icon">🔌</span>
+          <span class="stat-value">2</span>
+          <span class="stat-label">API Providers</span>
+        </div>
+      </div>
+      <div class="hero-preview glass">
+        <svg viewBox="0 0 600 280" width="100%" style="max-width:600px">
+          <rect x="20" y="20" width="560" height="240" rx="16" fill="rgba(5,12,24,.4)" stroke="rgba(0,116,255,.3)" stroke-width="1"/>
+          <rect x="40" y="60" width="300" height="40" rx="10" fill="rgba(0,116,255,.15)" stroke="rgba(0,116,255,.3)" stroke-width="1"/>
+          <text x="55" y="87" fill="#a5d6ff" font-family="monospace" font-size="11">Design a dashboard for a cybersecurity platform</text>
+          <rect x="260" y="115" width="300" height="55" rx="10" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.2)" stroke-width="1"/>
+          <text x="275" y="137" fill="#34d399" font-family="monospace" font-size="12" font-weight="bold">GPT-4</text>
+          <text x="275" y="157" fill="#9ab3e6" font-family="monospace" font-size="10">I'll design a dashboard with real-time threat monitoring,</text>
+          <text x="275" y="170" fill="#9ab3e6" font-family="monospace" font-size="10">incident response metrics, and dark-mode glass UI...</text>
+          <rect x="40" y="185" width="250" height="40" rx="10" fill="rgba(0,116,255,.15)" stroke="rgba(0,116,255,.3)" stroke-width="1"/>
+          <text x="55" y="210" fill="#a5d6ff" font-family="monospace" font-size="11">Add user authentication flow with JWT tokens</text>
+          <rect x="40" y="40" width="180" height="14" rx="4" fill="rgba(0,116,255,.15)"/>
+          <text x="55" y="52" fill="#0074FF" font-family="monospace" font-size="9">AEL AI Chat Interface — Demo</text>
+        </svg>
+      </div>
+      <a href="#chat" class="btn-primary glass" id="heroCta">
+        Start Chatting
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Section 2: Chat -->
+  <section id="chat" class="section">
+    <div class="section-bg">
+      <div class="orb orb-1"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge glass">💬 Chat</span>
+        <h2>AI Chat Interface</h2>
+        <p>Send messages to your selected AI model and get instant responses</p>
+      </div>
+      <div class="chat-container glass">
+        <div class="chat-header">
+          <div class="chat-model-select">
+            <select id="chatModelSelect" class="chat-select">
+              <optgroup label="OpenAI">
+                <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                <option value="gpt-4">GPT-4</option>
+                <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+              </optgroup>
+              <optgroup label="Anthropic">
+                <option value="claude-3-opus">Claude 3 Opus</option>
+                <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+              </optgroup>
+              <optgroup label="Local">
+                <option value="demo">Demo Mode (Simulated)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="chat-header-actions">
+            <button class="chat-btn" id="chatClear" title="Clear chat">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            </button>
+            <button class="chat-btn" id="chatExport" title="Export chat">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="message welcome-msg">
+            <div class="msg-avatar demo-avatar">AI</div>
+            <div class="msg-content">
+              <div class="msg-author">AEL Assistant</div>
+              <div class="msg-text">Hello! I'm your AI assistant. Select a model from the dropdown above and start chatting. You can configure your API keys in <a href="#settings" class="msg-link">Settings</a>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <textarea class="chat-input" id="chatInput" rows="1" placeholder="Type your message here..." enterkeyhint="send"></textarea>
+            <div class="chat-input-tools">
+              <span class="input-char-count" id="charCount">0</span>
+            </div>
+          </div>
+          <button class="btn-send" id="chatSend" disabled>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="chat-status" id="chatStatus"></div>
+    </div>
+  </section>
+
+  <!-- Section 3: Models -->
+  <section id="models" class="section">
+    <div class="section-bg">
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge glass">🤖 Models</span>
+        <h2>Supported AI Models</h2>
+        <p>Connect to multiple AI providers through a single interface</p>
+      </div>
+      <div class="models-grid" id="modelsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Section 4: Settings -->
+  <section id="settings" class="section">
+    <div class="section-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge glass">⚙️ Settings</span>
+        <h2>Configuration</h2>
+        <p>Manage your API keys and model preferences</p>
+      </div>
+      <div class="settings-grid">
+        <div class="settings-card glass">
+          <h3 class="settings-card-title">🔑 API Keys</h3>
+          <div class="form-group">
+            <label class="form-label" for="apiKeyOpenAI">OpenAI API Key</label>
+            <div class="input-group">
+              <input type="password" class="form-input" id="apiKeyOpenAI" placeholder="sk-...">
+              <button class="input-toggle" id="toggleOpenAI" aria-label="Toggle visibility">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="apiKeyAnthropic">Anthropic API Key</label>
+            <div class="input-group">
+              <input type="password" class="form-input" id="apiKeyAnthropic" placeholder="sk-ant-...">
+              <button class="input-toggle" id="toggleAnthropic" aria-label="Toggle visibility">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-card glass">
+          <h3 class="settings-card-title">🎯 Parameters</h3>
+          <div class="form-group">
+            <label class="form-label" for="settingModel">Default Model</label>
+            <select class="form-input" id="settingModel">
+              <option value="gpt-4-turbo">GPT-4 Turbo</option>
+              <option value="gpt-4">GPT-4</option>
+              <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+              <option value="claude-3-opus">Claude 3 Opus</option>
+              <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+              <option value="demo">Demo Mode</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Temperature: <span id="tempValue">0.7</span></label>
+            <input type="range" class="form-range" id="settingTemp" min="0" max="2" step="0.1" value="0.7">
+            <div class="range-labels"><span>Precise</span><span>Creative</span></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max Tokens: <span id="tokensValue">2048</span></label>
+            <input type="range" class="form-range" id="settingTokens" min="256" max="8192" step="256" value="2048">
+            <div class="range-labels"><span>Short</span><span>Long</span></div>
+          </div>
+        </div>
+        <div class="settings-card glass settings-card-wide">
+          <h3 class="settings-card-title">📝 System Prompt</h3>
+          <div class="form-group">
+            <textarea class="form-input form-textarea" id="settingSystemPrompt" rows="4" placeholder="You are a helpful AI assistant...">You are a helpful, knowledgeable AI assistant. Provide clear, accurate, and well-structured responses.</textarea>
+          </div>
+          <div class="settings-presets">
+            <span class="preset-label">Presets:</span>
+            <button class="preset-btn" data-prompt="You are a helpful, knowledgeable AI assistant. Provide clear, accurate, and well-structured responses.">Default</button>
+            <button class="preset-btn" data-prompt="You are an expert software engineer and technical architect. Provide detailed code solutions with best practices, design patterns, and performance considerations.">Developer</button>
+            <button class="preset-btn" data-prompt="You are a creative writer and storyteller. Craft engaging, vivid, and imaginative content with rich descriptions and compelling narratives.">Writer</button>
+            <button class="preset-btn" data-prompt="You are a data scientist and analyst. Provide data-driven insights, statistical analysis, and clear explanations of complex analytical concepts.">Analyst</button>
+          </div>
+        </div>
+        <div class="settings-card glass settings-card-wide">
+          <div class="settings-actions">
+            <button class="btn-primary glass" id="settingsSave">Save Settings</button>
+            <button class="btn-secondary glass" id="settingsClear">Clear All Data</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: History -->
+  <section id="history" class="section">
+    <div class="section-bg">
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge glass">📋 History</span>
+        <h2>Conversation History</h2>
+        <p>Browse, load, and manage your saved conversations</p>
+      </div>
+      <div class="history-controls">
+        <button class="btn-primary glass" id="historyRefresh">Refresh</button>
+        <button class="btn-secondary glass" id="historyClearAll">Clear All</button>
+      </div>
+      <div class="history-list glass" id="historyList">
+        <div class="history-empty">
+          <span class="history-empty-icon">💬</span>
+          <p>No saved conversations yet</p>
+          <p class="history-empty-sub">Start a chat and your conversations will appear here</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: About -->
+  <section id="about" class="section">
+    <div class="section-bg">
+      <div class="orb orb-1"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge glass">ℹ️ About</span>
+        <h2>About AEL AI Chat</h2>
+        <p>A unified chat interface by AEL Digital Studio</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card glass">
+          <h3>📋 Overview</h3>
+          <p>AEL AI Chat Interface provides a unified, consistent chat experience across multiple AI providers including OpenAI (GPT-4, GPT-3.5) and Anthropic (Claude). Built with vanilla JavaScript, it offers full control over your conversations without vendor lock-in.</p>
+        </div>
+        <div class="about-card glass">
+          <h3>⚡ Features</h3>
+          <ul class="about-list">
+            <li>Multi-model support (OpenAI + Anthropic + Demo)</li>
+            <li>Conversation history with localStorage persistence</li>
+            <li>Custom system prompts with presets</li>
+            <li>Adjustable temperature and max tokens</li>
+            <li>Export conversations as JSON</li>
+            <li>Glassmorphism UI with dark theme</li>
+            <li>Zero external dependencies</li>
+          </ul>
+        </div>
+        <div class="about-card glass">
+          <h3>🛠 Tech Stack</h3>
+          <ul class="about-list">
+            <li><strong>HTML5</strong> — Semantic structure</li>
+            <li><strong>CSS3</strong> — Glassmorphism, custom properties, flexbox/grid</li>
+            <li><strong>JavaScript</strong> — Vanilla JS, Fetch API, localStorage</li>
+            <li><strong>APIs</strong> — OpenAI REST API, Anthropic REST API</li>
+          </ul>
+        </div>
+        <div class="about-card glass">
+          <h3>👤 Author</h3>
+          <p><strong>Ayman Elmasry</strong><br>AEL Digital Studio</p>
+          <p class="about-version">Version 1.0 — 2026</p>
+          <p class="about-license">MIT License — Free for personal and commercial use</p>
+        </div>
+      </div>
+      <div class="about-footer glass">
+        <p>&copy; 2026 Ayman Elmasry — AEL Digital Studio. All rights reserved.</p>
+        <p class="about-tagline">Built with ❤️ and vanilla JavaScript</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="ael_ai_chat.js"></script>
+</body>
+</html>

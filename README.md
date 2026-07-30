@@ -72,11 +72,10 @@ User Input → Chat Interface → API Router → OpenAI / Anthropic / Demo → R
 ```
 ael-ai-chat-interface/
 ├── index.html              # HTML5 semantic structure
-├── css/
-│   └── style.css           # All styles (glassmorphism, dark theme)
-├── js/
-│   └── script.js           # Full JS engine (chat, API, storage, UI)
+├── ael_ai_chat.css         # All styles (glassmorphism, dark theme)
+├── ael_ai_chat.js          # Full JS engine (chat, API, storage, UI)
 ├── screenshot.svg          # Project preview image
+├── .nojekyll
 ├── .gitignore
 └── README.md
 ```
@@ -146,7 +145,7 @@ Or simply open `index.html` in any modern browser — no server required.
 | Architecture | Static site (HTML5 + CSS3 + JS) |
 | JavaScript | Vanilla ES2020+, Fetch API |
 | CSS | Custom properties for theming |
-| Icons | Font Awesome (CDN) |
+| Icons | Inline SVGs (no external dependencies) |
 | Data storage | localStorage for conversations and API keys |
 | Browser support | Chrome, Firefox, Safari, Edge (modern versions) |
 
@@ -157,7 +156,7 @@ Or simply open `index.html` in any modern browser — no server required.
 **Created by:** Ayman Elmasry — AEL Digital Studio  
 **Website:** [aymanelmasry.com](https://aymanelmasry.com)  
 **Email:** [info@aymanelmasry.com](mailto:info@aymanelmasry.com)  
-**License:** © 2026 Ayman Elmasry — AEL Digital Studio. All rights reserved.
+**License:** MIT License — Free for personal and commercial use.
 
 ### Connect
 
